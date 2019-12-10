@@ -17,11 +17,6 @@ app.use(bodyParser.urlencoded({
 
 const baseURL = 'http://localhost:8000/api'
 
-const modelTargets = fs.readdirSync(path.join(__dirname, 'modelTargets'))
-modelTargets.map(modelTarget => {
-  require('./modelTargets/' + modelTarget)
-})
-
 app.get('/', (req, res) => {
   res.render('home', {
     baseURL
