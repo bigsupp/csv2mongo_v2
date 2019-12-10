@@ -79,9 +79,14 @@ html(lang="en")
           
           hr
 
-          .row.form-group
-            .col
-              a(href="/"+target_model)
-                button.btn.btn-sm.btn-primary.border(type="button") Start over
+          #waiting
+            .spinner
+              .spinner-border.text-primary(role="status")
+                span.sr-only Loading...
+              span.ml-2 Please wait for processing.
+            .row.form-group.d-none
+              .col
+                a(href="/"+target_model)
+                  button.btn.btn-sm.btn-primary.border(type="button") Start over
 
     script(src="/library/bootstrap/js/bootstrap.bundle.min.js")

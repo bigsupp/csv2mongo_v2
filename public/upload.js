@@ -59,6 +59,8 @@ const init = () => {
           $('<li>').html(`Inserted ${inserted.data.insertedCount} record(s) with model=${target_model} ref_code=${ref_code}.`)
         )
       }
+      $('#waiting .spinner').remove()
+      $('#waiting .form-group').removeClass('d-none')
     } catch (error) {
       handleErrorException(error)
     }
