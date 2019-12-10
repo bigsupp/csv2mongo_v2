@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    link(rel="stylesheet", href="/library/bootstrap/css/bootstrap.min.css")
+    script(src="/library/jquery/jquery.min.js")
+    script(src="/library/axios/axios.min.js")
+    include ./template.default.pug
+    script(src="/public/upload.js")
+    title CSV2Mongo
+  body
+
+    nav(aria-label="breadcrumb")
+      ol.breadcrumb.pl-3
+        li.breadcrumb-item
+          a(href="/") Home
+        li.breadcrumb-item
+          span= ``+target_model
+
+    .container-fluid
+
+      .mt-4
+
+        .tab-pane.active#paneUpload.d-none
+          h5.mb-4
+            span.badge.badge-pill.badge-primary.mr-2 1
+            span Upload CSV File
+          form.form
+            .row.form-group
+              .col-6
+                input.form-control.form-control-sm(type="file", name="userAttachment")
+              .col
+                button.btn.btn-sm.btn-primary.border.mr-2(type="button", name="btnUpload")
+                  span » Upload CSV
+                a(href="/")
+                  button.btn.btn-sm.btn-light.border(type="button") Cancel
+
+        //- 
+
+        .tab-pane#paneSample.d-none
+          h5.mb-4
+            span.badge.badge-pill.badge-primary.mr-2 2
+            span Sample Data
+          form.form
+            .row
+              .col
+                table.table.table-sm.table-bordered.table-striped.table-hovered
+                  thead.bg-light.small
+                    tr
+                      th --
+                  tbody.sampleData.small
+                    tr
+                      td --
+            .row.form-group
+              .col-4#textTotalRows.small --
+            .row.form-group
+              .col-4
+                .input-group.input-group-sm
+                  .input-group-prepend
+                    span.input-group-text Reference Code
+                  input.form-control#refCode(type="text", name="refCode", value="dcstest")
+            .row.form-group
+              .col-4
+                button.btn.btn-sm.btn-primary.border.mr-2(type="button", name="btnLoadData")
+                  strong » Confirm Data
+                a(href="/")
+                  button.btn.btn-sm.btn-light.border(type="button") Cancel
+
+        //- 
+
+        .tab-pane#paneResult.d-none
+          h5.mb-4
+            span.badge.badge-pill.badge-primary.mr-2 3
+            span Result
+          .row
+            .col#dumpResult
+          
+          hr
+
+          .row.form-group
+            .col
+              a(href="/"+target_model)
+                button.btn.btn-sm.btn-primary.border(type="button") Start over
+
+    script(src="/library/bootstrap/js/bootstrap.bundle.min.js")

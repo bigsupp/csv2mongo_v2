@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    link(rel="stylesheet", href="/library/bootstrap/css/bootstrap.min.css")
+    script(src="/library/jquery/jquery.min.js")
+    script(src="/library/axios/axios.min.js")
+    include ./template.default.pug
+    script(src="/public/home.js")
+    title CSV2Mongo
+  body
+
+    nav(aria-label="breadcrumb")
+      ol.breadcrumb.pl-3
+        li.breadcrumb-item
+          span Home
+
+    .container-fluid.mt-4
+      .row
+        .col
+          legend Model List:
+      .row
+        .col-4
+          ul.list-unstyled#modelList

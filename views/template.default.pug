@@ -1,0 +1,7 @@
+if baseURL && baseURL.length>0
+  script.
+    const baseURL = !{JSON.stringify(baseURL)}
+if target_model && target_model.length>0
+  script.
+    const target_model = !{JSON.stringify(target_model)}
+script(src="/public/default.js")

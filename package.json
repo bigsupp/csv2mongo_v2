@@ -1,0 +1,29 @@
+{
+  "name": "csv2mongo_v2",
+  "version": "1.0.0",
+  "description": "csv2mongo_v2",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pm2restart": "pm2 restart ecosystem.config.js",
+    "pm2reload-prod": "pm2 reload ecosystem.config.js --env production",
+    "pm2reload-dev": "pm2 reload ecosystem.config.js --env development"
+  },
+  "author": "bigsupp@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "bootstrap": "^4.3.1",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "jquery": "^3.4.1",
+    "moment": "^2.24.0",
+    "mongoose": "^5.6.5",
+    "multer": "^1.4.2",
+    "neat-csv": "^5.1.0",
+    "path": "^0.12.7",
+    "pug": "^2.0.4",
+    "shortid": "^2.2.14"
+  }
+}

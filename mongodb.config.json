@@ -1,0 +1,12 @@
+{
+  "option": {
+    "useNewUrlParser": true,
+    "useCreateIndex": true,
+    "auto_reconnect": true,
+    "reconnectTries": 180,
+    "reconnectInterval": 1000,
+    "connectTimeoutMS": 1000,
+    "socketTimeoutMS": 60000
+  },
+  "uri": "mongodb://localhost:27017/siph-mc-dev"
+}
