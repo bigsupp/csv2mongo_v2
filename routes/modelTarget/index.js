@@ -13,14 +13,45 @@ router.get('/', (req, res, next) => {
 router.get('/:modelTarget', (req, res, next) => {
   try {
     const modelTarget = req.params.modelTarget
-    const Model = require(`../../modelTargets/${modelName}`)
+    const Model = require(`../../modelTargets/${modelTarget}`)
     const schema = Model.schema
     const schemaFields = Object.keys(schema.obj)
-    console.log('schema: ', schema);
     res.json({
       model: modelTarget,
       fields: schemaFields
     })
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/:modelTarget/sample', async (req, res, next) => {
+  try {
+    const modelTarget = req.params.modelTarget
+    const Model = require(`../../modelTargets/${modelTarget}`)
+    const data = await Model.aggregate([{
+      $sample: {
+        size: 4
+      }
+    }])
+    if(req.query.table) {
+      res.render('sample_data_table', {
+        data
+      })
+      return
+    }
+    res.json(data)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/:modelTarget/count', async (req, res, next) => {
+  try {
+    const modelTarget = req.params.modelTarget
+    const Model = require(`../../modelTargets/${modelTarget}`)
+    const count = await Model.countDocuments()
+    res.json(count)
   } catch (error) {
     next(error)
   }
