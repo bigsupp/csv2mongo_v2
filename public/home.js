@@ -26,7 +26,7 @@ const init = async () => {
           'target': '_blank'
         }).html()
         $item.find('a.btn-sample').attr({
-          'href': '/api/modelTarget/' + model + '/sample',
+          'href': '/api/modelTarget/' + model + '/sample?table=1',
           'target': '_blank'
         }).html()
         $item.find('a.btn-upload').attr({
