@@ -31,7 +31,7 @@ router.get('/:modelTarget/sample', async (req, res, next) => {
     const Model = require(`../../modelTargets/${modelTarget}`)
     const data = await Model.aggregate([{
       $sample: {
-        size: 4
+        size: 10
       }
     }])
     if(req.query.table) {
