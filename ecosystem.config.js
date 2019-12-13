@@ -4,7 +4,7 @@ module.exports = {
     script: 'server.js',
     // instances: 1,
     autorestart: true,
-    watch: ["libs", "models", "routes", "server.js"],
+    watch: ["libs", "models", "modelTargets", "routes", "server.js"],
     ignore_watch: ['node_modules', 'uploads', 'views', 'public'],
     max_memory_restart: '1G',
     env: {
