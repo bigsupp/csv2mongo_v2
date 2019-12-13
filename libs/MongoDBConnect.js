@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
-const mongodbConfig = require('../mongodb.config.json')
 
 let isConnectedBefore = false;
 
-module.exports = () => {
-  mongoose.connect(mongodbConfig.uri, mongodbConfig.option);
+module.exports = (uri, option) => {
+  mongoose.connect(uri, option);
 }
 
 mongoose.connection.on('error', () => {
