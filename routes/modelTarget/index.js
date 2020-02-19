@@ -26,10 +26,24 @@ router.get('/:modelTarget', (req, res, next) => {
 })
 
 router.get('/:modelTarget/data', async (req, res, next) => {
+  const selectFields = {
+    ref_code: 0,
+    created_at: 0,
+    updated_at: 0,
+    __v: 0
+  }
+  if(req.query.exclude) {
+    const excludes = req.query.exclude.split(",")
+    excludes.map(exclude => {
+      selectFields[exclude] = 0
+    })
+  }
   try {
     const modelTarget = req.params.modelTarget
     const Model = require(`../../modelTargets/${modelTarget}`)
-    const data = await Model.find({}).exec()
+    const data = await Model.find({})
+      .select(selectFields)
+      .exec()
     res.json(data)
   } catch (error) {
     next(error)
@@ -45,7 +59,7 @@ router.get('/:modelTarget/sample', async (req, res, next) => {
         size: 10
       }
     }])
-    if(req.query.table) {
+    if (req.query.table) {
       res.render('sample_data_table', {
         modelTarget,
         data
