@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 const mongodb_uri = process.env.MONGODB_URI || "mongodb://localhost:27017/siph-mc-dev"
+// console.log('mongodb_uri: ', mongodb_uri);
 const mongodb_config = require('./mongodb.config.json')
 require('./libs/MongoDBConnect')(mongodb_uri, mongodb_config)
 
@@ -10,6 +11,8 @@ const fs = require('fs')
 const express = require('express')
 const app = express()
 
+// {useUnifiedTopology: true}
+
 app.set('views', './views');
 app.set('view engine', 'pug');
 
@@ -18,7 +21,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-const baseURL = process.env.API_BASEURL || 'http://localhost:8000/api'
+const baseURL = process.env.API_BASEURL || 'http://localhost:8100/api'
 
 app.get('/', (req, res) => {
   res.render('home', {
@@ -44,7 +47,7 @@ app.use('/library/jquery', express.static(path.join('./node_modules/jquery/dist'
 
 app.use('/api', require('./routes'))
 
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 8100
 app.listen(port, () => {
   console.log(`Server started on port ${port}, env=${process.env.NODE_ENV}`)
 })
