@@ -1,5 +1,10 @@
 .env
 node_modules
 uploads
-modelTargets
+modelTargets/*
 !modelTargets/MCDoctor
+!modelTargets/MCLocation
+!modelTargets/MCProcedure
+!modelTargets/MCWardRoom
+!modelTargets/MCDiagnosis
+!modelTargets/MCMedicine
