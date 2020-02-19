@@ -25,6 +25,18 @@ router.get('/:modelTarget', (req, res, next) => {
   }
 })
 
+// router.get('/:modelTarget/data', async (req, res, next) => {
+//   try {
+//     const modelTarget = req.params.modelTarget
+//     const Model = require(`../../modelTargets/${modelTarget}`)
+//     Model.find({
+      
+//     })
+//   } catch (error) {
+//     next(error)
+//   }
+// })
+
 router.get('/:modelTarget/sample', async (req, res, next) => {
   try {
     const modelTarget = req.params.modelTarget
@@ -36,6 +48,7 @@ router.get('/:modelTarget/sample', async (req, res, next) => {
     }])
     if(req.query.table) {
       res.render('sample_data_table', {
+        modelTarget,
         data
       })
       return
