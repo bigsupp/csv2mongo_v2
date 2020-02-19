@@ -9,6 +9,7 @@ const init = async () => {
           <h4 class="card-title modelName"></h4>
           <div class="model-info mb-2 d-none">
             <a class="btn btn-sample btn-outline-light text-dark border pt-1 pb-1 mt-2">View Sample Data</a>
+            <a class="btn btn-data btn-outline-light text-dark border pt-1 pb-1 mt-2">All Data</a>
             </div>
             <div>
             <a class="btn btn-schema btn-outline-light text-dark border pt-1 pb-1 mt-2">View Schema Fields</a>
@@ -27,6 +28,10 @@ const init = async () => {
         }).html()
         $item.find('a.btn-sample').attr({
           'href': '/api/modelTarget/' + model + '/sample?table=1',
+          'target': '_blank'
+        }).html()
+        $item.find('a.btn-data').attr({
+          'href': '/api/modelTarget/' + model + '/data',
           'target': '_blank'
         }).html()
         $item.find('a.btn-upload').attr({
