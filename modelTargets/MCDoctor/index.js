@@ -21,8 +21,8 @@ schema.pre('validate', function (next) {
   if (this.contact_mobile) {
     const contact_mobiles = this.contact_mobile[0].split(",")
     this.contact_mobile = contact_mobiles.map(val => val.replace(/\s+/g, '').replace(/-/g, ''))
-    next()
   }
+  next()
 })
 
 try {
