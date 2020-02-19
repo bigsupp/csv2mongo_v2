@@ -38,7 +38,7 @@ const init = () => {
       if (!ref_code || ref_code.replace(/\s/g, "").length <= 0) {
         throw new Error('refCode is empty and/or invalid')
       }
-      const deleted = await API.delete(`/replacer/MCDoctor/all`, {
+      const deleted = await API.delete(`/replacer/${target_model}/all`, {
         data: {
           ref_code
         }
