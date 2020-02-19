@@ -30,7 +30,7 @@ const init = async () => {
           'target': '_blank'
         }).html()
         $item.find('a.btn-upload').attr({
-          'href': '/' + model.toLowerCase(),
+          'href': '/' + model,
           // 'target': '_blank'
         }).html()
         $('#modelList').append($item)
