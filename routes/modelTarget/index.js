@@ -25,17 +25,16 @@ router.get('/:modelTarget', (req, res, next) => {
   }
 })
 
-// router.get('/:modelTarget/data', async (req, res, next) => {
-//   try {
-//     const modelTarget = req.params.modelTarget
-//     const Model = require(`../../modelTargets/${modelTarget}`)
-//     Model.find({
-      
-//     })
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+router.get('/:modelTarget/data', async (req, res, next) => {
+  try {
+    const modelTarget = req.params.modelTarget
+    const Model = require(`../../modelTargets/${modelTarget}`)
+    const data = await Model.find({}).exec()
+    res.json(data)
+  } catch (error) {
+    next(error)
+  }
+})
 
 router.get('/:modelTarget/sample', async (req, res, next) => {
   try {
