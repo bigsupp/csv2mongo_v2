@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const path = require('path')
 const fs = require('fs')
 const cors = require('cors')
+const compression = require('compression')
 const express = require('express')
 const app = express()
 
@@ -18,6 +19,7 @@ app.set('views', './views');
 app.set('view engine', 'pug');
 
 app.use(cors())
+app.use(compression())
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
