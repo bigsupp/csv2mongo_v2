@@ -9,7 +9,6 @@ module.exports = {
     max_memory_restart: '1G',
     env: {
       NODE_ENV: 'development',
-      PORT: 8000,
       UPLOAD_DIRECTORY: "uploads",
       UPLOAD_MAXIMUM_FILE_SIZE: 4194304,
       UPLOAD_FIELD_NAME: "userAttachment"
