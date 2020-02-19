@@ -9,13 +9,10 @@ html(lang="en")
     script(src="/library/axios/axios.min.js")
     include ./template.default.pug
     script(src="/public/home.js")
-    title CSV2Mongo
+    title GlobalVar
   body
 
-    nav(aria-label="breadcrumb")
-      ol.breadcrumb.pl-3
-        li.breadcrumb-item
-          span Home
+    include ./template.navigation.pug
 
     .container-fluid.mt-4
       .row
