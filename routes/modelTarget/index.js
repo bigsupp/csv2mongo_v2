@@ -107,6 +107,7 @@ router.get('/:modelTarget/array/:prop', async (req, res, next) => {
   try {
     const modelTarget = req.params.modelTarget
     const prop = req.params.prop
+    const q = req.query.q
     const Model = require(`../../modelTargets/${modelTarget}`)
     const project = {}
     project[prop] = 1
@@ -114,18 +115,25 @@ router.get('/:modelTarget/array/:prop', async (req, res, next) => {
       _id: 0
     }
     projectFinal[prop] = '$_id'
-    const doc = await Model.aggregate([{
-        $project: project
-      },
-      {
-        $group: {
-          _id: '$name_th'
-        }
-      },
-      {
-        $project: projectFinal
+    const pipeline = [{
+      $project: project
+    }]
+    if (q && q.length > 0) {
+      const propMatch = {
+        $match: {}
       }
-    ]).exec()
+      propMatch['$match'][prop] = new RegExp(q, 'ig')
+      pipeline.push(propMatch)
+    }
+    pipeline.push({
+      $group: {
+        _id: '$name_th'
+      }
+    })
+    pipeline.push({
+      $project: projectFinal
+    })
+    const doc = await Model.aggregate(pipeline).exec()
     const arr = doc.map(d => {
       return d[prop]
     })
