@@ -32,7 +32,7 @@ router.get('/:modelTarget/data', async (req, res, next) => {
     updated_at: 0,
     __v: 0
   }
-  if(req.query.exclude) {
+  if (req.query.exclude) {
     const excludes = req.query.exclude.split(",")
     excludes.map(exclude => {
       selectFields[exclude] = 0
@@ -58,7 +58,7 @@ router.get('/:modelTarget/sample', async (req, res, next) => {
       $sample: {
         size: 10
       }
-    }])
+    }]).exec()
     if (req.query.table) {
       res.render('sample_data_table', {
         modelTarget,
@@ -78,6 +78,26 @@ router.get('/:modelTarget/count', async (req, res, next) => {
     const Model = require(`../../modelTargets/${modelTarget}`)
     const count = await Model.countDocuments()
     res.json(count)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/:modelTarget/search', async (req, res, next) => {
+  try {
+    const modelTarget = req.params.modelTarget
+    const Model = require(`../../modelTargets/${modelTarget}`)
+    const conditions = {}
+    if(req.query) {
+      Object.keys(req.query).map(q => {
+        conditions[q] = new RegExp(req.query[q], 'ig')
+      })
+    }
+    const doc = await Model
+      .find(conditions)
+      .exec()
+    // console.log('doc: ', doc);
+    res.json(doc)
   } catch (error) {
     next(error)
   }
