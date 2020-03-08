@@ -126,8 +126,10 @@ router.get('/:modelTarget/array/:prop', async (req, res, next) => {
         $project: projectFinal
       }
     ]).exec()
-    // console.log('doc: ', doc);
-    res.json(doc)
+    const arr = doc.map(d => {
+      return d[prop]
+    })
+    res.json(arr)
   } catch (error) {
     next(error)
   }
