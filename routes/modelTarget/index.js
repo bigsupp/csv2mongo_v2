@@ -88,7 +88,7 @@ router.get('/:modelTarget/search', async (req, res, next) => {
     const modelTarget = req.params.modelTarget
     const Model = require(`../../modelTargets/${modelTarget}`)
     const conditions = {}
-    if(req.query) {
+    if (req.query) {
       Object.keys(req.query).map(q => {
         conditions[q] = new RegExp(req.query[q], 'ig')
       })
@@ -96,6 +96,36 @@ router.get('/:modelTarget/search', async (req, res, next) => {
     const doc = await Model
       .find(conditions)
       .exec()
+    // console.log('doc: ', doc);
+    res.json(doc)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/:modelTarget/array/:prop', async (req, res, next) => {
+  try {
+    const modelTarget = req.params.modelTarget
+    const prop = req.params.prop
+    const Model = require(`../../modelTargets/${modelTarget}`)
+    const project = {}
+    project[prop] = 1
+    const projectFinal = {
+      _id: 0
+    }
+    projectFinal[prop] = '$_id'
+    const doc = await Model.aggregate([{
+        $project: project
+      },
+      {
+        $group: {
+          _id: '$name_th'
+        }
+      },
+      {
+        $project: projectFinal
+      }
+    ]).exec()
     // console.log('doc: ', doc);
     res.json(doc)
   } catch (error) {
