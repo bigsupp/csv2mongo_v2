@@ -9,3 +9,4 @@ modelTargets/*
 !modelTargets/MCDiagnosis
 !modelTargets/MCMedicine
 !modelTargets/MCHospital
+!modelTargets/MCDirectoryFloor
