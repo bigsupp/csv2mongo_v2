@@ -127,13 +127,13 @@ router.get('/:modelTarget/array/:prop', async (req, res, next) => {
     }
     pipeline.push({
       $group: {
-        _id: '$name_th'
+        _id: `$${prop}`
       }
     })
     pipeline.push({
       $project: projectFinal
     })
-    console.log(pipeline)
+    // console.log(pipeline)
     const doc = await Model.aggregate(pipeline).exec()
     const arr = doc.map(d => {
       return d[prop]
