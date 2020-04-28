@@ -23,19 +23,19 @@ const init = async () => {
         const $item = $itemTemplate.clone()
         $item.find('.modelName').html(model)
         $item.find('a.btn-schema').attr({
-          'href': '/api/modelTarget/' + model,
+          'href': `${baseURL}/api/modelTarget/` + model,
           'target': '_blank'
         }).html()
         $item.find('a.btn-sample').attr({
-          'href': '/api/modelTarget/' + model + '/sample?table=1',
+          'href': `${baseURL}/api/modelTarget/` + model + '/sample?table=1',
           'target': '_blank'
         }).html()
         $item.find('a.btn-data').attr({
-          'href': '/api/modelTarget/' + model + '/data',
+          'href': `${baseURL}/api/modelTarget/` + model + '/data',
           'target': '_blank'
         }).html()
         $item.find('a.btn-upload').attr({
-          'href': '/' + model,
+          'href': `${baseURL}/` + model,
           // 'target': '_blank'
         }).html()
         $('#modelList').append($item)

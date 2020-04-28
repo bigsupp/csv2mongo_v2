@@ -12,7 +12,7 @@ html(lang="en")
     nav(aria-label="breadcrumb")
       ol.breadcrumb.pl-3
         li.breadcrumb-item
-          a(href="/") Home
+          a(href=`${baseURL}/`) Home
         li.breadcrumb-item
           span= ``+target_model
 
@@ -31,7 +31,7 @@ html(lang="en")
               .col
                 button.btn.btn-sm.btn-primary.border.mr-2(type="button", name="btnUpload")
                   span » Upload CSV
-                a(href="/")
+                a(href=`${baseURL}/`)
                   button.btn.btn-sm.btn-light.border(type="button") Cancel
 
         //- 
@@ -62,7 +62,7 @@ html(lang="en")
               .col-4
                 button.btn.btn-sm.btn-primary.border.mr-2(type="button", name="btnLoadData")
                   strong » Confirm Data
-                a(href="/")
+                a(href=`${baseURL}/`)
                   button.btn.btn-sm.btn-light.border(type="button") Cancel
 
         //- 
@@ -83,7 +83,7 @@ html(lang="en")
               span.ml-2 Please wait for processing.
             .row.form-group.d-none
               .col
-                a(href="/"+target_model)
+                a(href=`${baseURL}/`+target_model)
                   button.btn.btn-sm.btn-primary.border(type="button") Start over
 
     script(src="/library/bootstrap/js/bootstrap.bundle.min.js")
