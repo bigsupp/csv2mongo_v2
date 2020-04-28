@@ -40,8 +40,8 @@ const init = async () => {
         }).html()
         $('#modelList').append($item)
 
-        fetch('/api/modelTarget/' + model + '/count')
-          .then(resp => resp.json())
+        API.get(`/modelTarget/` + model + '/count')
+          .then(resp => resp.data)
           .then(data => {
             if(data && parseInt(data)>=0) {
               $item.find('.model-info')
