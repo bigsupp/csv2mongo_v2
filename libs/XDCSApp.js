@@ -1,8 +1,4 @@
 module.exports = (req, res, next) => {
-  if(process.env.NODE_ENV==='development') {
-    console.log(req.method, req.originalUrl)
-    console.log('X-Custom-DCSApp-BaseURL:', req.get('X-Custom-DCSApp-BaseURL'))
-  }
   if(req.get('X-Custom-DCSApp-BaseURL')) {
     const prefixBaseURL = req.get('X-Custom-DCSApp-BaseURL') || ''
     const apiBaseUrlWithoutProtocol = process.env.API_BASEURL.replace(/http:\/\//ig, '')
@@ -13,6 +9,11 @@ module.exports = (req, res, next) => {
     }
   } else {
     req.app.locals.baseURL = process.env.API_BASEURL || ``
+  }
+  if(process.env.NODE_ENV==='development') {
+    console.log(req.method, req.originalUrl)
+    console.log('X-Custom-DCSApp-BaseURL:', req.get('X-Custom-DCSApp-BaseURL'))
+    console.log('req.app.locals.baseURL: ', req.app.locals.baseURL)
   }
   next()
 }
