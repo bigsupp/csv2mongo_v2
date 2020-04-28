@@ -27,6 +27,9 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use((req, res, next) => {
+  if(process.env.NODE_ENV==='development') {
+    console.log(req.method, req.originalUrl)
+  }
   if(req.get('X-DCS-App-BaseURL')) {
     const prefixBaseURL = req.get('X-DCS-App-BaseURL') || ''
     const apiBaseUrlWithoutProtocol = process.env.API_BASEURL.replace(/http:\/\//ig, '')
