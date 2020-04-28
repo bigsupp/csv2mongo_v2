@@ -4,11 +4,8 @@ html(lang="en")
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
-    link(rel="stylesheet", href="/library/bootstrap/css/bootstrap.min.css")
-    script(src="/library/jquery/jquery.min.js")
-    script(src="/library/axios/axios.min.js")
     include ./template.default.pug
-    script(src="/public/upload.js")
+    script(src=`${baseURL}/public/upload.js`)
     title GlobalVar
   body
 
