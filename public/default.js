@@ -1,5 +1,5 @@
 const API = axios.create({
-  baseURL,
+  baseURL: baseURL + '/api',
   timeout: 10000,
   headers: {
     'x-custom-dcs-app': 'csv2mongo'

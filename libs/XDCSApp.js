@@ -9,10 +9,10 @@ module.exports = (req, res, next) => {
     if(apiBaseUrlWithoutProtocol.indexOf('/')===0) {
       req.app.locals.baseURL = prefixBaseURL + apiBaseUrlWithoutProtocol
     } else {
-      req.app.locals.baseURL = prefixBaseURL + apiBaseUrlWithoutProtocol.replace(/^(([a-zA-Z0-9])\.?)+(:\d+)?/, '') || `${prefixBaseURL}/api`
+      req.app.locals.baseURL = prefixBaseURL + apiBaseUrlWithoutProtocol.replace(/^(([a-zA-Z0-9])\.?)+(:\d+)?/, '') || `${prefixBaseURL}`
     }
   } else {
-    req.app.locals.baseURL = process.env.API_BASEURL || `/api`
+    req.app.locals.baseURL = process.env.API_BASEURL || ``
   }
   next()
 }
