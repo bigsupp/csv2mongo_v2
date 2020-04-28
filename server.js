@@ -26,18 +26,28 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-const baseURL = process.env.API_BASEURL || 'http://localhost:8100/api'
+app.use((req, res, next) => {
+  if(req.get('X-DCS-App-BaseURL')) {
+    const prefixBaseURL = req.get('X-DCS-App-BaseURL') || ''
+    const apiBaseUrlWithoutProtocol = process.env.API_BASEURL.replace(/http:\/\//ig, '')
+    if(apiBaseUrlWithoutProtocol.indexOf('/')===0) {
+      app.locals.baseURL = prefixBaseURL + apiBaseUrlWithoutProtocol || `http://localhost:8100/${prefixBaseURL}api`
+    } else {
+      app.locals.baseURL = prefixBaseURL + apiBaseUrlWithoutProtocol.replace(/^([a-zA-Z0-9]+)(:\d+)?/, '') || `http://localhost:8100${prefixBaseURL}api`
+    }
+  } else {
+    app.locals.baseURL = process.env.API_BASEURL || 'http://localhost:8100/api'
+  }
+  next()
+})
 
 app.get('/', (req, res) => {
-  res.render('home', {
-    baseURL
-  })
+  res.render('home')
 })
 app.get('/:model', (req, res) => {
   const target_model = req.params.model
   try {
     res.render('upload', {
-      baseURL,
       target_model
     })
   } catch (error) {
