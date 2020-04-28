@@ -29,6 +29,7 @@ app.use(bodyParser.urlencoded({
 app.use((req, res, next) => {
   if(process.env.NODE_ENV==='development') {
     console.log(req.method, req.originalUrl)
+    console.log('X-DCS-App-BaseURL:', req.get('X-DCS-App-BaseURL'))
   }
   if(req.get('X-DCS-App-BaseURL')) {
     const prefixBaseURL = req.get('X-DCS-App-BaseURL') || ''
