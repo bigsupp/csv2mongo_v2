@@ -29,10 +29,10 @@ app.use(bodyParser.urlencoded({
 app.use((req, res, next) => {
   if(process.env.NODE_ENV==='development') {
     console.log(req.method, req.originalUrl)
-    console.log('X-DCS-App-BaseURL:', req.get('X-DCS-App-BaseURL'))
+    console.log('X-Custom-DCSApp-BaseURL:', req.get('X-Custom-DCSApp-BaseURL'))
   }
-  if(req.get('X-DCS-App-BaseURL')) {
-    const prefixBaseURL = req.get('X-DCS-App-BaseURL') || ''
+  if(req.get('X-Custom-DCSApp-BaseURL')) {
+    const prefixBaseURL = req.get('X-Custom-DCSApp-BaseURL') || ''
     const apiBaseUrlWithoutProtocol = process.env.API_BASEURL.replace(/http:\/\//ig, '')
     if(apiBaseUrlWithoutProtocol.indexOf('/')===0) {
       app.locals.baseURL = prefixBaseURL + apiBaseUrlWithoutProtocol || `http://localhost:8100/${prefixBaseURL}api`
