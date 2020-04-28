@@ -7,12 +7,12 @@ module.exports = (req, res, next) => {
     const prefixBaseURL = req.get('X-Custom-DCSApp-BaseURL') || ''
     const apiBaseUrlWithoutProtocol = process.env.API_BASEURL.replace(/http:\/\//ig, '')
     if(apiBaseUrlWithoutProtocol.indexOf('/')===0) {
-      app.locals.baseURL = prefixBaseURL + apiBaseUrlWithoutProtocol
+      req.app.locals.baseURL = prefixBaseURL + apiBaseUrlWithoutProtocol
     } else {
-      app.locals.baseURL = prefixBaseURL + apiBaseUrlWithoutProtocol.replace(/^(([a-zA-Z0-9])+\.?)(:\d+)?/, '') || `${prefixBaseURL}/api`
+      req.app.locals.baseURL = prefixBaseURL + apiBaseUrlWithoutProtocol.replace(/^(([a-zA-Z0-9])+\.?)(:\d+)?/, '') || `${prefixBaseURL}/api`
     }
   } else {
-    app.locals.baseURL = process.env.API_BASEURL || `/api`
+    req.app.locals.baseURL = process.env.API_BASEURL || `/api`
   }
   next()
 }
