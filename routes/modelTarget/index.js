@@ -90,7 +90,11 @@ router.get('/:modelTarget/search', async (req, res, next) => {
     const conditions = {}
     if (req.query) {
       Object.keys(req.query).map(q => {
-        conditions[q] = new RegExp(req.query[q], 'ig')
+        if(req.query.exact && q!=='exact') {
+          conditions[q] = new RegExp("^"+req.query[q]+"$", 'i')
+        } else if(q!=='exact') {
+          conditions[q] = new RegExp(req.query[q], 'ig')
+        }
       })
     }
     const doc = await Model
