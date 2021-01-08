@@ -9,27 +9,34 @@ html(lang="en")
     title GlobalVar
   body
 
+    h2.pl-3
+      a(href=`${baseURL}/`, style="color:black; text-decoration:none;") GlobalVar  
     nav(aria-label="breadcrumb")
       ol.breadcrumb.pl-3
         li.breadcrumb-item
           a(href=`${baseURL}/`) Home
         li.breadcrumb-item
           span= ``+target_model
+        li.breadcrumb-item
+          span Upload CSV
 
     .container-fluid
 
-      .mt-4
+      .mb-2.small.text-secondary= `Starting at ${moment().format('YYYY-MM-DD HH:mm:ss')}`
+
+      .mt-0
 
         .tab-pane.active#paneUpload.d-none
           h5.mb-4
             span.badge.badge-pill.badge-primary.mr-2 1
             span Upload CSV File
           form.form
-            .row.form-group
-              .col-6
-                input.form-control.form-control-sm(type="file", name="userAttachment")
-              .col
-                button.btn.btn-sm.btn-primary.border.mr-2(type="button", name="btnUpload")
+            .row
+              .col.mb-4.mt-4
+                input.form-control-file.border(type="file", name="userAttachment")
+            .row
+              .col.mt-4
+                button.btn.btn-sm.btn-primary.border.mr-4(type="button", name="btnUpload")
                   span » Upload CSV
                 a(href=`${baseURL}/`)
                   button.btn.btn-sm.btn-light.border(type="button") Cancel
@@ -42,7 +49,7 @@ html(lang="en")
             span Sample Data
           form.form
             .row
-              .col
+              .col.mt-4
                 table.table.table-sm.table-bordered.table-striped.table-hovered
                   thead.bg-light.small
                     tr
@@ -53,13 +60,13 @@ html(lang="en")
             .row.form-group
               .col-4#textTotalRows.small --
             .row.form-group
-              .col-4
+              .col-4.mt-4
                 .input-group.input-group-sm
                   .input-group-prepend
                     span.input-group-text Reference Code
                   input.form-control#refCode(type="text", name="refCode", value="dcstest")
             .row.form-group
-              .col-4
+              .col-4.mt-4
                 button.btn.btn-sm.btn-primary.border.mr-2(type="button", name="btnLoadData")
                   strong » Confirm Data
                 a(href=`${baseURL}/`)
@@ -83,7 +90,7 @@ html(lang="en")
               span.ml-2 Please wait for processing.
             .row.form-group.d-none
               .col
-                a(href=`${baseURL}/`+target_model)
-                  button.btn.btn-sm.btn-primary.border(type="button") Start over
+                a.btn.btn-sm.btn-primary.border.mr-2(href=`${baseURL}/`+target_model) Start over
+                a.btn.btn-sm.btn-light.border(href=`${baseURL}`) Back to Home
 
     script(src="/library/bootstrap/js/bootstrap.bundle.min.js")

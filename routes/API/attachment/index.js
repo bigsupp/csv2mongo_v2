@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const router = express.Router()
 
-const Attachment = require('../../models/attachment')
+const Attachment = require('../../../models/attachment')
 
 const mongoose = require('mongoose')
 const path = require('path')
@@ -12,10 +12,12 @@ const moment = require('moment')
 const fs = require('fs')
 const csv = require('neat-csv')
 
+const uploadDirectory = path.join(__dirname, `../../../${process.env.UPLOAD_DIRECTORY || 'uploads'}`)
+
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     // console.log('destination:', file)
-    callback(null, path.join(__dirname, '../../', process.env.UPLOAD_DIRECTORY))
+    callback(null, uploadDirectory)
   },
   filename: (req, file, callback) => {
     // console.log('filename:', file)
@@ -29,7 +31,7 @@ const storage = multer.diskStorage({
     callback(null, filenameParts.join('$') + path.extname(file.originalname))
   },
   fileFilter: (req, file, callback) => {
-    console.log('fileFilter:', file)
+    // console.log('fileFilter:', file)
     callback(null, true)
   }
 })
@@ -37,9 +39,9 @@ const storage = multer.diskStorage({
 const Upload = multer({
   storage: storage,
   limits: {
-    fileSize: process.env.UPLOAD_MAXIMUM_FILE_SIZE
+    fileSize: process.env.UPLOAD_MAXIMUM_FILE_SIZE || 4*1024*1024
   }
-}).single(process.env.UPLOAD_FIELD_NAME)
+}).single(process.env.UPLOAD_FIELD_NAME || 'userAttachment')
 
 //
 
@@ -69,7 +71,7 @@ router.get('/:id/sample/:rowCount', (req, res, next) => {
       let rowCount = parseInt(req.params.rowCount)
       rowCount = (rowCount >= 1 && rowCount <= 20) ? rowCount : 10
       const rs = fs.createReadStream(
-        path.join(__dirname, `../../uploads`, attachment.filename)
+        path.join(uploadDirectory, attachment.filename)
       )
       csv(rs)
         .then(rows => res.json({
@@ -122,36 +124,47 @@ router.get('/:id/data', async (req, res, next) => {
   }
 })
 
-router.post('/', (req, res) => {
-  Upload(req, res, (error) => {
-    const {
-      filename,
-      mimetype
-    } = req.file
-    if (error) {
-      console.log('ERROR upload:', error)
-      return res.status(500).json({
-        error
-      })
-    }
-    const attachment = new Attachment({
-      expired_at: moment(),
-      filename: req.file.filename,
-      filename_orig: req.file.originalname,
-      encoding: req.file.encoding,
-      mimetype: req.file.mimetype,
-      size: req.file.size
-    })
-    attachment.save()
-      .then(saved => {
-        res.status(201).json({
-          _id: saved._id,
-          created_at: saved.created_at,
-          filename: saved.filename,
-          filename_orig: saved.filename_orig
+router.post('/', (req, res, next) => {
+  try {
+    Upload(req, res, (error) => {
+      if(!req.file) {
+        const err = new Error('file is invalid and/or empty')
+        console.log('ERROR upload:', err)
+        return res.status(500).json({
+          error: err
         })
+      }
+      const {
+        filename,
+        mimetype
+      } = req.file
+      if (error) {
+        console.log('ERROR upload:', error)
+        return res.status(500).json({
+          error
+        })
+      }
+      const attachment = new Attachment({
+        expired_at: moment(),
+        filename: req.file.filename,
+        filename_orig: req.file.originalname,
+        encoding: req.file.encoding,
+        mimetype: req.file.mimetype,
+        size: req.file.size
       })
-  })
+      attachment.save()
+        .then(saved => {
+          res.status(201).json({
+            _id: saved._id,
+            created_at: saved.created_at,
+            filename: saved.filename,
+            filename_orig: saved.filename_orig
+          })
+        })
+    })
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.put(`/:id/dump`, async (req, res, next) => {
@@ -175,11 +188,11 @@ router.put(`/:id/dump`, async (req, res, next) => {
       throw error
     }
     const rs = fs.createReadStream(
-      path.join(__dirname, `../../uploads`, attachment.filename)
+      path.join(uploadDirectory, attachment.filename)
     )
     const rows = await csv(rs)
     rows.forEach(row => row.ref_code = ref_code)
-    const Model = require(`../../modelTargets/${modelTarget}`)
+    const Model = require(`../../../modelTargets/${modelTarget}`)
     const inserted = await Model.insertMany(rows)
     const insertedResult = {
       insertedCount: inserted.length,

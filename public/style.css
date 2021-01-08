@@ -1,0 +1,52 @@
+pre {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  background-color: wheat;
+  padding: 8px;
+}
+
+.table.tableModelTargetStats {
+  margin:12px 0;
+}
+
+.table.tableModelTargetStats>thead>tr>th {
+  padding: 0px 12px !important;
+  font-size:80%;
+}
+
+.table.tableModelTargetStats>tbody>tr>td,.table.tableModelTargetStats>tfoot>tr>td {
+  padding: 4px 12px !important;
+  font-size:80%;
+}
+
+.col-cardItem {
+  padding: 0px 12px !important;
+}
+
+.col-cardItem>.card>.card-header {
+  padding: 12px !important;
+}
+
+.col-cardItem>.card>.card-body {
+  padding: 12px !important;
+}
+
+.col-cardItem>.card>.list-group>.list-group-item {
+  padding: 12px !important;
+}
+
+.col-cardItem>.card:hover>.card-header {
+  background-color: #007bff;
+  color: #fff;
+}
+.col-cardItem>.card:hover>.card-header .stat-modelName-total>.badge {
+  background-color: #fff;
+  color: #17a2b8;
+}
+
+.btn.btn-schema {
+  padding:0px 8px;
+  margin-top:8px;
+  font-size:60%;
+}
+

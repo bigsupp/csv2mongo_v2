@@ -28,26 +28,12 @@ app.use(bodyParser.urlencoded({
 
 app.use(require('./libs/XDCSApp'))
 
-app.get('/', (req, res) => {
-  res.render('home')
-})
-app.get('/:model', (req, res) => {
-  const target_model = req.params.model
-  try {
-    res.render('upload', {
-      target_model
-    })
-  } catch (error) {
-    res.send(`Error target model is not found, <a href="/">back to home.</a>`)
-  }
-})
+app.use(require('./routes'))
 
 app.use('/public', express.static(path.join('./public')))
 app.use('/library/axios', express.static(path.join('./node_modules/axios/dist')))
 app.use('/library/bootstrap', express.static(path.join('./node_modules/bootstrap/dist')))
 app.use('/library/jquery', express.static(path.join('./node_modules/jquery/dist')))
-
-app.use('/api', require('./routes'))
 
 const port = process.env.PORT || 8100
 app.listen(port, () => {

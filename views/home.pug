@@ -1,3 +1,47 @@
+mixin cardItem(modelName, schemaFields)
+  .card.cardItem(data-modelname=modelName).border-dark
+    h5.card-header.border-dark
+      .d-flex.justify-content-between
+        .m-0= modelName
+        .m-0.stat-modelName-total.d-none
+          //- span.small.mr-2.text-secondary total
+          span.badge.badge-info.stat-modelName-total-value
+      a.btn.btn-schema.btn-light.text-dark.border ⓘ Fields
+    .card-body
+      .card-text
+        - let ref_codes = []
+        - let total_count = 0
+        if modelStats[modelName]
+          - ref_codes = Object.keys(modelStats[modelName]['ref_code']).sort()
+        table.table.table-sm.table-hover.table-bordered.tableModelTargetStats
+          thead(style="background-color:#cde;")
+            tr
+              th(style="border-bottom:2px solid #abc;") ref_code
+              th.text-right(style="border-bottom:2px solid #abc;") count
+          tbody
+            each ref_code in ref_codes
+              tr
+                td
+                  span= ref_code
+                  a(href=`/api/modelTarget/${modelName}/search?ref_code=${ref_code}`, target='_blank')
+                    span= view
+                    span.ml-1 🡥
+                - ref_code_count = modelStats[modelName]['ref_code'][ref_code]['count'] || 0
+                td.text-right= ref_code_count
+                - total_count += ref_code_count
+          tfoot(style="border-top:2px solid #abc;")
+            tr
+              td.text-secondary.bg-light Total
+              td.bg-light.text-right.total-item-value(data-modelname=modelName,data-total=total_count)= total_count || 0
+        .m-0
+          a.btn.btn-sample.btn-sm.btn-outline-light.text-dark.border Sample Data
+          span.ml-1.mr-1
+          a.btn.btn-data.btn-sm.btn-outline-light.text-dark.border All Data
+    ul.list-group.list-group-flush
+      li.list-group-item
+        a.btn.btn-upload.btn-sm.btn-outline-primary.mr-2 🠉 Upload CSV
+        a.btn.btn-download.btn-sm.btn-outline-warning 🠋 Download CSV
+
 <!DOCTYPE html>
 html(lang="en")
   head
@@ -6,6 +50,7 @@ html(lang="en")
     meta(http-equiv="X-UA-Compatible", content="ie=edge")
     include ./template.default.pug
     script(src=`${baseURL}/public/home.js`)
+    link(rel=`stylesheet`,href=`${baseURL}/public/style.css`)
     title GlobalVar
   body
 
@@ -16,3 +61,6 @@ html(lang="en")
         .col
           legend Model List:
       .row#modelList
+        each modelTargetName,idx in modelTargetNames
+          .col-md-4.col-lg-3.mt-4.col-cardItem(data-col-carditem-idx=idx)
+            +cardItem(modelTargetName, 'dcstest')

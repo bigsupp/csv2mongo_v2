@@ -31,6 +31,15 @@ const init = () => {
 
   $('#paneSample button[name="btnLoadData"]').on('click', async function () {
     const attachment_id = $(this).data('attachment-id');
+    const confirmText = $(`#refCode`).val()
+    const enteredConfirm = prompt(`Please enter "${confirmText}" into following input as confirmation before continues.`)
+    if(!enteredConfirm || enteredConfirm.length===0) {
+      return
+    }
+    if(enteredConfirm !== confirmText) {
+      alert('Confirmation text is invalid.')
+      return
+    }
     $('#paneSample').addClass('d-none')
     $('#paneResult').removeClass('d-none')
     const ref_code = $('#refCode').val()

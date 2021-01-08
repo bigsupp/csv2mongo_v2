@@ -1,12 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
-const moment = require('moment')
-
-router.use('/attachment', require('./attachment'))
-router.use('/modeltarget', require('./modelTarget'))
-router.use('/replacer', require('./replacer'))
-
+router.use('/api', require('./API'))
+router.use('/', require('./Client'))
+  
 router.use((err, req, res, next) => {
   console.log('ERROR:', err);
   if(!err.statusCode) {

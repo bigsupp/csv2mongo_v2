@@ -12,7 +12,7 @@ router.delete(`/:model/all`, async (req, res, next) => {
   }
   const modelName = req.params.model
   try {
-    const Model = require(`../../modelTargets/${modelName}`)
+    const Model = require(`../../../modelTargets/${modelName}`)
     const deleted = await Model.deleteMany({
       ref_code
     }).exec()
